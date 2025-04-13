@@ -1,11 +1,3 @@
-name: Build
-on:
-  push:
-    branches:
-      - origin
-  pull_request:
-    types: [opened, synchronize, reopened]
-
 jobs:
   sonarqube:
     name: SonarCloud
@@ -29,7 +21,7 @@ jobs:
           # Run SonarScanner inside a container
           docker run --rm \
             -e SONAR_TOKEN=${{ secrets.SONAR_TOKEN }} \
-            -e PROJECT_KEY=${{ secrets.SONAR_PROJECT_KEY }} \
+            -e SONAR_PROJECT_KEY=${{ secrets.PROJECT_KEY }} \
             -e SONAR_ORG=${{ secrets.SONAR_ORG }} \
             -v $PWD:/workspace \
             sonarsource/sonar-scanner-cli \
@@ -39,4 +31,3 @@ jobs:
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
             -Dsonar.organization=${{ secrets.SONAR_ORG }}
-
