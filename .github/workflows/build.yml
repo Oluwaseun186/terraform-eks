@@ -23,11 +23,19 @@ jobs:
           
       - name: Install Latest SonarScanner
         run: |
-          # Install the latest version of SonarScanner
-          wget https://github.com/SonarSource/sonar-scanner-cli/releases/download/4.8.0.2856/sonar-scanner-4.8.0.2856-linux.zip
-          unzip sonar-scanner-4.8.0.2856-linux.zip -d /opt/
-          export PATH=$PATH:/opt/sonar-scanner-4.8.0.2856-linux/bin
-      
+          # Get the latest version number from GitHub releases
+          LATEST_VERSION=$(curl -s https://api.github.com/repos/SonarSource/sonar-scanner-cli/releases/latest | jq -r .tag_name)
+          
+          # Download and install the latest version of SonarScanner
+          wget https://github.com/SonarSource/sonar-scanner-cli/releases/download/${LATEST_VERSION}/sonar-scanner-${LATEST_VERSION}-linux.zip
+          unzip sonar-scanner-${LATEST_VERSION}-linux.zip -d /opt/
+          
+          # Add SonarScanner to PATH
+          export PATH=$PATH:/opt/sonar-scanner-${LATEST_VERSION}-linux/bin
+
+      - name: Install jq
+        run: sudo apt-get install jq
+
       - name: Run SonarScanner with Java 17
         run: |
           export JAVA_HOME=${{ steps.setup-java.outputs.java-home }}
