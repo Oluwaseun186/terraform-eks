@@ -5,6 +5,7 @@ on:
       - origin
   pull_request:
     types: [opened, synchronize, reopened]
+
 jobs:
   sonarqube:
     name: SonarCloud
@@ -12,15 +13,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysi
+          fetch-depth: 0
 
       - name: Set up Java 17
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
           java-version: '17'
-
-   
 
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@v1
@@ -29,22 +28,3 @@ jobs:
           organization: ${{ secrets.SONAR_ORG }}
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
-
-      - name: Run SonarScanner with Java 17
-        run: |
-          export JAVA_HOME=${JAVA_HOME_17_X64}
-          export PATH=$JAVA_HOME/bin:$PATH
-          sonar-scanner -X
-
-
-      - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@v5
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          run: |
-            sonar-scanner \
-              -Dsonar.projectKey=Oluwaseun186_terraform-eks \
-              -Dsonar.sources=. \
-              -Dsonar.host.url=https://sonarcloud.io \
-              -Dsonar.login=$SONAR_TOKEN
