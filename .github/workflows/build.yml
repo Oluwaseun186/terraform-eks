@@ -15,11 +15,11 @@ jobs:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysi
 
       - name: Set up Java 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v3
         with:
-            distribution: 'temurin' # See 'Supported distributions' for available options
-            java-version: '21'
-            run: java HelloWorldApp.java
+          distribution: 'temurin'
+          java-version: '17'
+
    
 
       - name: SonarCloud Scan
@@ -33,7 +33,7 @@ jobs:
 
       - name: Run SonarScanner with Java 17
         run: |
-          export JAVA_HOME=${JAVA_HOME_21_X64}
+          export JAVA_HOME=${JAVA_HOME_17_X64}
           export PATH=$JAVA_HOME/bin:$PATH
           sonar-scanner -X
 
