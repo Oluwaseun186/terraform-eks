@@ -23,8 +23,8 @@ jobs:
       - name: Run SonarQube Scanner
         uses: sonarsource/sonarcloud-github-action@v1
         with:
-          organization: Oluwaseun186-1
-          projectKey: Oluwaseun186_terraform-eks 
+          SONAR_ORG: ${{ secrets.SONAR_ORG }}
+          SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Run SonarScanner
