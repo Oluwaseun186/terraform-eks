@@ -20,7 +20,7 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Run SonarScanner in Docker
+      - name: Run SonarScanner in Docke
         run: |
           # Pull the latest SonarScanner Docker image from DockerHub
           docker pull sonarsource/sonar-scanner-cli:latest
