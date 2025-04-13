@@ -29,11 +29,11 @@ jobs:
           organization: ${{ secrets.SONAR_ORG }}
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          
+
 
       - name: Run SonarScanner with Java 17
         run: |
-          export JAVA_HOME=${JAVA_HOME_17_X64}
+          export JAVA_HOME=${JAVA_HOME_21_X64}
           export PATH=$JAVA_HOME/bin:$PATH
           sonar-scanner -X
 
