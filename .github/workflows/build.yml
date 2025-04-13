@@ -20,22 +20,19 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-
+          
       - name: Run SonarScanner in Docker
         run: |
-          # Pull the latest SonarScanner Docker image from DockerHub
           docker pull sonarsource/sonar-scanner-cli:latest
 
-          # Run SonarScanner inside a container using the correct image
           docker run --rm \
-            -e SONAR_TOKEN=${{ secrets.SONAR_TOKEN }} \
-            -e SONAR_PROJECT_KEY=${{ secrets.PROJECT_KEY }} \
-            -e SONAR_ORG=${{ secrets.SONAR_ORG }} \
-            -v $PWD:/workspace \
+            -e SONAR_TOKEN="${{ secrets.SONAR_TOKEN }}" \
+            -v "$(pwd):/usr/src" \
             sonarsource/sonar-scanner-cli:latest \
             sonar-scanner \
-            -Dsonar.projectKey=${{ secrets.PROJECT_KEY }} \
+            -Dsonar.projectKey="${{ secrets.SONAR_PROJECT_KEY }}" \
             -Dsonar.sources=. \
             -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
-            -Dsonar.organization=${{ secrets.SONAR_ORG }}
+            -Dsonar.login="${{ secrets.SONAR_TOKEN }}" \
+            -Dsonar.organization="${{ secrets.SONAR_ORG }}"
+
