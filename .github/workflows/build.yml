@@ -20,13 +20,12 @@ jobs:
           java-version: '17'
           distribution: 'temurin'    
 
-      - name: Install SonarScanner
-        run: |
-          wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
-          unzip sonar-scanner-cli-5.0.1.3006-linux.zip
-          sudo mv sonar-scanner-5.0.1.3006-linux /opt/sonar-scanner
-          echo "/opt/sonar-scanner/bin" >> $GITHUB_PATH   
-
+      - name: Run SonarQube Scanner
+        uses: sonarsource/sonarcloud-github-action@v1
+        with:
+          organization: Oluwaseun186-1
+          projectKey: Oluwaseun186_terraform-eks 
+          token: ${{ secrets.SONAR_TOKEN }}
 
       - name: Run SonarScanner
         run: sonar-scanner -X
