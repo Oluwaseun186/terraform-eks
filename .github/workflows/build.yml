@@ -20,13 +20,13 @@ jobs:
           java-version: '17'
           distribution: 'temurin'    
 
-      - name: Run SonarQube Scanner
+      - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@v1
         with:
+          sonar-project-key: ${{ secrets.SONAR_PROJECT_KEY }}
+          sonar-organization: ${{ secrets.SONAR_ORG }}
+        env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
-          SONAR_ORG: ${{ secrets.SONAR_ORG }}
-          
 
       - name: Run SonarScanner
         run: sonar-scanner -X
