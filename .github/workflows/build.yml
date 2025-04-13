@@ -23,21 +23,26 @@ jobs:
 
       - name: Run SonarScanner in Docker
         run: |
-          # Pull the latest SonarScanner Docker image
+  
           docker pull sonarsource/sonar-scanner-cli:latest
 
+     
+          SONAR_PROJECT_KEY=$(echo "${{ secrets.PROJECT_KEY }}" | tr '[:upper:]' '[:lower:]')
+          SONAR_ORG=$(echo "${{ secrets.SONAR_ORG }}" | tr '[:upper:]' '[:lower:]')
+          
           # Run SonarScanner inside a container
           docker run --rm \
             -e SONAR_TOKEN=${{ secrets.SONAR_TOKEN }} \
-            -e SONAR_PROJECT_KEY=${{ secrets.PROJECT_KEY }} \
-            -e SONAR_ORG=${{ secrets.SONAR_ORG }} \
+            -e SONAR_PROJECT_KEY=${PROJECT_KEY} \
+            -e SONAR_ORG=${SONAR_ORG} \
             -v $PWD:/workspace \
             sonarsource/sonar-scanner-cli \
             sonar-scanner \
-            -Dsonar.projectKey=${{ secrets.PROJECT_KEY }} \
+            -Dsonar.projectKey=${PROJECT_KEY} \
             -Dsonar.sources=. \
             -Dsonar.host.url=https://sonarcloud.io \
             -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
-            -Dsonar.organization=${{ secrets.SONAR_ORG }}
+            -Dsonar.organization=${SONAR_ORG}
+
 
 
